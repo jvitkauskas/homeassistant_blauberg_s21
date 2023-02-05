@@ -27,21 +27,16 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
 
     Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
     """
-    await hass.async_add_executor_job(
-        validate_connection, data[CONF_HOST], data[CONF_PORT]
-    )
+    try:
+        host = data[CONF_HOST]
+        port = data[CONF_PORT]
+        client = S21Client(host, port)
+        await client.poll()
+    except Exception as exception:
+        raise CannotConnect from exception
 
     # Return info that you want to store in the config entry.
     return {"title": "Blauberg S21"}
-
-
-def validate_connection(host: str, port: int) -> None:
-    """Validate the connection."""
-    try:
-        client = S21Client(host, port)
-        client.poll_status()
-    except Exception as exception:
-        raise CannotConnect from exception
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
