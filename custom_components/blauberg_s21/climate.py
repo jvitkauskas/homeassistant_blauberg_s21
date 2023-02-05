@@ -163,6 +163,30 @@ class BlS21ClimateEntity(ClimateEntity):
         if self._client.device:
             return self._client.device.sw_version
 
+    @property
+    def icon(self) -> Optional[str]:
+        if self._client.device:
+            if self._client.device.is_boosting:
+                return "mdi:fan-plus"
+            if self._client.device.hvac_action == BlS21HVACAction.OFF:
+                return "mdi:fan-off"
+            elif self._client.device.hvac_action == BlS21HVACAction.IDLE:
+                return "mdi:fan-remove"
+            elif self._client.device.hvac_action == BlS21HVACAction.COOLING:
+                return "mdi:fan-chevron-down"
+            elif self._client.device.hvac_action == BlS21HVACAction.HEATING:
+                return "mdi:fan-chevron-up"
+            elif self._client.device.hvac_action == BlS21HVACAction.FAN:
+                if self._client.device.fan_mode == 1:
+                    return "mdi:fan-speed-1"
+                elif self._client.device.fan_mode == 2:
+                    return "mdi:fan-speed-2"
+                elif self._client.device.fan_mode == 3:
+                    return "mdi:fan-speed-3"
+                else:
+                    return "mdi:fan"
+        return "mdi:fan-auto"
+
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         await self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
