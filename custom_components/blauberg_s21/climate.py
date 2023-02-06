@@ -68,7 +68,6 @@ async def async_setup_entry(
 
 class BlS21ClimateEntity(ClimateEntity):
     """Representation of a Blauberg S21 climate feature."""
-
     _attr_translation_key = "s21climate"
 
     def __init__(self, client: S21Client) -> None:
@@ -208,7 +207,8 @@ class BlS21ClimateEntity(ClimateEntity):
         await self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
-        await self._client.set_fan_mode(int(fan_mode))
+        int_fan_mode = 255 if fan_mode == "custom" else 1 if fan_mode == FAN_LOW else 2 if fan_mode == FAN_MEDIUM else 3 if fan_mode == FAN_HIGH else int(fan_mode)
+        await self._client.set_fan_mode(int_fan_mode)
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         temperature = kwargs.get(ATTR_TEMPERATURE)
