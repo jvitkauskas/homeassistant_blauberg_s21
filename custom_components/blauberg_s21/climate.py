@@ -16,6 +16,10 @@ from homeassistant.components.climate.const import (
     HVAC_MODE_FAN_ONLY,
     HVAC_MODE_HEAT,
     HVAC_MODE_OFF,
+    FAN_AUTO,
+    FAN_LOW,
+    FAN_MEDIUM,
+    FAN_HIGH
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
@@ -42,6 +46,13 @@ S21_TO_HA_HVACACTION = {
     BlS21HVACAction.OFF: HVACAction.OFF,
 }
 
+S21_TO_HA_FAN_MODE = {
+    1: FAN_LOW,
+    2: FAN_MEDIUM,
+    3: FAN_HIGH,
+    255: "custom"
+}
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -57,6 +68,8 @@ async def async_setup_entry(
 
 class BlS21ClimateEntity(ClimateEntity):
     """Representation of a Blauberg S21 climate feature."""
+
+    _attr_translation_key = "s21climate"
 
     def __init__(self, client: S21Client) -> None:
         self._client = client
@@ -134,11 +147,15 @@ class BlS21ClimateEntity(ClimateEntity):
     @property
     def fan_mode(self) -> Optional[str]:
         if self._client.device:
+            if self._client.device.max_fan_level == 3:
+                return S21_TO_HA_FAN_MODE[self._client.device.fan_mode]
             return str(self._client.device.fan_mode)
 
     @property
     def fan_modes(self) -> Optional[list[str]]:
         if self._client.device:
+            if self._client.device.max_fan_level == 3:
+                return [S21_TO_HA_FAN_MODE[m] for m in self._client.device.fan_modes]
             return [str(m) for m in self._client.device.fan_modes]
 
     @property
@@ -170,22 +187,22 @@ class BlS21ClimateEntity(ClimateEntity):
                 return "mdi:fan-plus"
             if self._client.device.hvac_action == BlS21HVACAction.OFF:
                 return "mdi:fan-off"
-            elif self._client.device.hvac_action == BlS21HVACAction.IDLE:
+            if self._client.device.hvac_action == BlS21HVACAction.IDLE:
                 return "mdi:fan-remove"
-            elif self._client.device.hvac_action == BlS21HVACAction.COOLING:
-                return "mdi:fan-chevron-down"
-            elif self._client.device.hvac_action == BlS21HVACAction.HEATING:
-                return "mdi:fan-chevron-up"
-            elif self._client.device.hvac_action == BlS21HVACAction.FAN:
+            if self._client.device.max_fan_level == 3:
                 if self._client.device.fan_mode == 1:
                     return "mdi:fan-speed-1"
-                elif self._client.device.fan_mode == 2:
+                if self._client.device.fan_mode == 2:
                     return "mdi:fan-speed-2"
-                elif self._client.device.fan_mode == 3:
+                if self._client.device.fan_mode == 3:
                     return "mdi:fan-speed-3"
-                else:
-                    return "mdi:fan"
-        return "mdi:fan-auto"
+            if self._client.device.hvac_action == BlS21HVACAction.COOLING:
+                return "mdi:fan-chevron-down"
+            if self._client.device.hvac_action == BlS21HVACAction.HEATING:
+                return "mdi:fan-chevron-up"
+            if self._client.device.hvac_action == BlS21HVACAction.FAN:
+                return "mdi:fan"
+        return "mdi:fan"
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         await self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])

@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://github.com/jvitkauskas/homeassistant_blauberg_s21",
   "issue_tracker": "https://github.com/jvitkauskas/homeassistant_blauberg_s21/issues",
-  "requirements": ["pybls21==2.0.1"],
+  "requirements": ["pybls21==2.0.2"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},
