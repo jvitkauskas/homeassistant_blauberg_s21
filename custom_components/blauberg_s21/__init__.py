@@ -27,7 +27,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     try:
         client = S21Client(host, port)
-        await client.poll()
+        client.poll()
     except Exception as ex:
         _LOGGER.error("Connection failed at %s:%d (%s)", host, port, ex)
         raise ConfigEntryNotReady from ex

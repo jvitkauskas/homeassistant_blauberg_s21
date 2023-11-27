@@ -203,17 +203,17 @@ class BlS21ClimateEntity(ClimateEntity):
                 return "mdi:fan"
         return "mdi:fan"
 
-    async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
-        await self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
+    def set_hvac_mode(self, hvac_mode: HVACMode) -> None:
+        self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
-    async def async_set_fan_mode(self, fan_mode: str) -> None:
+    def set_fan_mode(self, fan_mode: str) -> None:
         int_fan_mode = 255 if fan_mode == "custom" else 1 if fan_mode == FAN_LOW else 2 if fan_mode == FAN_MEDIUM else 3 if fan_mode == FAN_HIGH else int(fan_mode)
-        await self._client.set_fan_mode(int_fan_mode)
+        self._client.set_fan_mode(int_fan_mode)
 
-    async def async_set_temperature(self, **kwargs: Any) -> None:
+    def set_temperature(self, **kwargs: Any) -> None:
         temperature = kwargs.get(ATTR_TEMPERATURE)
         if temperature is not None:
-            await self._client.set_temperature(int(temperature))
+            self._client.set_temperature(int(temperature))
 
-    async def async_update(self) -> None:
-        await self._client.poll()
+    def update(self) -> None:
+        self._client.poll()

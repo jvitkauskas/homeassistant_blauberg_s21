@@ -31,7 +31,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         host = data[CONF_HOST]
         port = data[CONF_PORT]
         client = S21Client(host, port)
-        await client.poll()
+        client.poll()
     except Exception as exception:
         raise CannotConnect from exception
 

@@ -4,12 +4,12 @@
   "config_flow": true,
   "documentation": "https://github.com/jvitkauskas/homeassistant_blauberg_s21",
   "issue_tracker": "https://github.com/jvitkauskas/homeassistant_blauberg_s21/issues",
-  "requirements": ["pybls21==2.0.2"],
+  "requirements": ["pybls21==3.0.0"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},
   "dependencies": [],
   "codeowners": ["@jvitkauskas"],
   "iot_class": "local_polling",
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
