@@ -22,6 +22,9 @@
                 "state_attributes": {
                     "fan_mode": {
                         "state": {
+                            "low": "Lėtas",
+                            "medium": "Vidutinis",
+                            "high": "Greitas",
                             "custom": "Pasirinktinis"
                         }
                     }
