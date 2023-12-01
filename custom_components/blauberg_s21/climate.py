@@ -1,7 +1,7 @@
 """Support for climate device."""
 from typing import Any, Optional
 
-from pybls21 import S21Client
+from pybls21.client import S21Client
 from pybls21.models import HVACAction as BlS21HVACAction, HVACMode as BlS21HVACMode
 
 from homeassistant.components.climate import (

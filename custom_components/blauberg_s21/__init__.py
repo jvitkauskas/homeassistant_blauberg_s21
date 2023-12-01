@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 
-from pybls21 import S21Client
+from pybls21.client import S21Client
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_PORT, Platform

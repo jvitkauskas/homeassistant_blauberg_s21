@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from pybls21 import S21Client
+from pybls21.client import S21Client
 import voluptuous as vol
 
 from homeassistant import config_entries
