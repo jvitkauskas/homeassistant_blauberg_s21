@@ -1,9 +1,6 @@
 """Support for climate device."""
 from typing import Any, Optional
 
-from pybls21.client import S21Client
-from pybls21.models import HVACAction as BlS21HVACAction, HVACMode as BlS21HVACMode
-
 from homeassistant.components.climate import (
     ClimateEntity,
     ClimateEntityFeature,
@@ -11,20 +8,23 @@ from homeassistant.components.climate import (
     HVACMode,
 )
 from homeassistant.components.climate.const import (
+    FAN_AUTO,
+    FAN_HIGH,
+    FAN_LOW,
+    FAN_MEDIUM,
     HVAC_MODE_AUTO,
     HVAC_MODE_COOL,
     HVAC_MODE_FAN_ONLY,
     HVAC_MODE_HEAT,
     HVAC_MODE_OFF,
-    FAN_AUTO,
-    FAN_LOW,
-    FAN_MEDIUM,
-    FAN_HIGH
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from pybls21.client import S21Client
+from pybls21.models import HVACAction as BlS21HVACAction
+from pybls21.models import HVACMode as BlS21HVACMode
 
 from .const import DOMAIN
 
@@ -46,12 +46,7 @@ S21_TO_HA_HVACACTION = {
     BlS21HVACAction.OFF: HVACAction.OFF,
 }
 
-S21_TO_HA_FAN_MODE = {
-    1: FAN_LOW,
-    2: FAN_MEDIUM,
-    3: FAN_HIGH,
-    255: "custom"
-}
+S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
 
 
 async def async_setup_entry(
@@ -68,6 +63,7 @@ async def async_setup_entry(
 
 class BlS21ClimateEntity(ClimateEntity):
     """Representation of a Blauberg S21 climate feature."""
+
     _attr_translation_key = "s21climate"
 
     def __init__(self, client: S21Client) -> None:
@@ -207,11 +203,17 @@ class BlS21ClimateEntity(ClimateEntity):
         self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
     def set_fan_mode(self, fan_mode: str) -> None:
-        int_fan_mode = 255 if fan_mode == "custom" \
-            else 1 if fan_mode == FAN_LOW \
-            else 2 if fan_mode == FAN_MEDIUM \
-            else 3 if fan_mode == FAN_HIGH \
+        int_fan_mode = (
+            255
+            if fan_mode == "custom"
+            else 1
+            if fan_mode == FAN_LOW
+            else 2
+            if fan_mode == FAN_MEDIUM
+            else 3
+            if fan_mode == FAN_HIGH
             else int(fan_mode)
+        )
         self._client.set_fan_mode(int_fan_mode)
 
     def set_temperature(self, **kwargs: Any) -> None:

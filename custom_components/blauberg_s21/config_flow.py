@@ -3,15 +3,14 @@ from __future__ import annotations
 
 from typing import Any
 
-from pybls21.client import S21Client
-from pybls21.exceptions import UnsupportedDeviceException
 import voluptuous as vol
-
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
+from pybls21.client import S21Client
+from pybls21.exceptions import UnsupportedDeviceException
 
 from .const import DOMAIN
 

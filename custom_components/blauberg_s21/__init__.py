@@ -1,18 +1,13 @@
 """The Blauberg S21 integration."""
 from __future__ import annotations
 
-import logging
-
-from pybls21.client import S21Client
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from pybls21.client import S21Client
 
 from .const import DOMAIN
-
-_LOGGER = logging.getLogger(__name__)
 
 PLATFORMS: list[Platform] = [Platform.CLIMATE]
 
@@ -29,8 +24,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         client = S21Client(host, port)
         client.poll()
     except Exception as ex:
-        _LOGGER.error("Connection failed at %s:%d (%s)", host, port, ex)
-        raise ConfigEntryNotReady from ex
+        raise ConfigEntryNotReady(
+            "Failed to connect to modbusTCP://%s:%d", host, port
+        ) from ex
 
     hass.data[DOMAIN][entry.entry_id] = client
 
