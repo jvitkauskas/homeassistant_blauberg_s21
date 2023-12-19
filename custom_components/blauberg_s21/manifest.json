@@ -1,15 +1,13 @@
 {
   "domain": "blauberg_s21",
   "name": "Blauberg S21",
+  "codeowners": ["@jvitkauskas"],
   "config_flow": true,
+  "dependencies": [],
   "documentation": "https://github.com/jvitkauskas/homeassistant_blauberg_s21",
+  "integration_type": "device",
+  "iot_class": "local_polling",
   "issue_tracker": "https://github.com/jvitkauskas/homeassistant_blauberg_s21/issues",
   "requirements": ["pybls21==3.0.4"],
-  "ssdp": [],
-  "zeroconf": [],
-  "homekit": {},
-  "dependencies": [],
-  "codeowners": ["@jvitkauskas"],
-  "iot_class": "local_polling",
   "version": "0.1.3"
 }
