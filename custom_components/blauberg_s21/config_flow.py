@@ -1,10 +1,10 @@
 """Config flow for Blauberg S21 integration."""
 from __future__ import annotations
 
-import logging
 from typing import Any
 
 from pybls21.client import S21Client
+from pybls21.exceptions import UnsupportedDeviceException
 import voluptuous as vol
 
 from homeassistant import config_entries
@@ -14,8 +14,6 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
 from .const import DOMAIN
-
-_LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {vol.Required(CONF_HOST): str, vol.Required(CONF_PORT, default=502): int}
@@ -32,6 +30,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         port = data[CONF_PORT]
         client = S21Client(host, port)
         client.poll()
+    except UnsupportedDeviceException:
+        raise
     except Exception as exception:
         raise CannotConnect from exception
 
@@ -59,8 +59,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             info = await validate_input(self.hass, user_input)
         except CannotConnect:
             errors["base"] = "cannot_connect"
+        except UnsupportedDeviceException:
+            errors["base"] = "unsupported_device"
         except Exception:  # pylint: disable=broad-except
-            _LOGGER.exception("Unexpected exception")
             errors["base"] = "unknown"
         else:
             return self.async_create_entry(title=info["title"], data=user_input)

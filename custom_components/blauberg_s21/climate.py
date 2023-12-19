@@ -207,7 +207,11 @@ class BlS21ClimateEntity(ClimateEntity):
         self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
     def set_fan_mode(self, fan_mode: str) -> None:
-        int_fan_mode = 255 if fan_mode == "custom" else 1 if fan_mode == FAN_LOW else 2 if fan_mode == FAN_MEDIUM else 3 if fan_mode == FAN_HIGH else int(fan_mode)
+        int_fan_mode = 255 if fan_mode == "custom" \
+            else 1 if fan_mode == FAN_LOW \
+            else 2 if fan_mode == FAN_MEDIUM \
+            else 3 if fan_mode == FAN_HIGH \
+            else int(fan_mode)
         self._client.set_fan_mode(int_fan_mode)
 
     def set_temperature(self, **kwargs: Any) -> None:

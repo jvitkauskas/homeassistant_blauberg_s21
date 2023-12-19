@@ -5,7 +5,8 @@
         },
         "error": {
             "cannot_connect": "Nepavyko prisijungti",
-            "unknown": "Netikėta klaida"
+            "unknown": "Netikėta klaida",
+            "unsupported_device": "Nepalaikomas įrenginys"
         },
         "step": {
             "user": {
