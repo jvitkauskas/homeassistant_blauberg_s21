@@ -28,7 +28,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         host = data[CONF_HOST]
         port = data[CONF_PORT]
         client = S21Client(host, port)
-        client.poll()
+        await client.poll()
     except UnsupportedDeviceException:
         raise
     except Exception as exception:

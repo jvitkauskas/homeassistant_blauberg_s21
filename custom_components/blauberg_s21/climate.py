@@ -178,6 +178,8 @@ class BlS21ClimateEntity(ClimateEntity):
     @property
     def icon(self) -> Optional[str]:
         if self._client.device:
+            if not self._client.device.available:
+                return "mdi:lan-disconnect"
             if self._client.device.is_boosting:
                 return "mdi:fan-plus"
             if self._client.device.hvac_action == BlS21HVACAction.OFF:
@@ -199,10 +201,10 @@ class BlS21ClimateEntity(ClimateEntity):
                 return "mdi:fan"
         return "mdi:fan"
 
-    def set_hvac_mode(self, hvac_mode: HVACMode) -> None:
-        self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
+    async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
+        await self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
-    def set_fan_mode(self, fan_mode: str) -> None:
+    async def async_set_fan_mode(self, fan_mode: str) -> None:
         int_fan_mode = (
             255
             if fan_mode == "custom"
@@ -214,12 +216,12 @@ class BlS21ClimateEntity(ClimateEntity):
             if fan_mode == FAN_HIGH
             else int(fan_mode)
         )
-        self._client.set_fan_mode(int_fan_mode)
+        await self._client.set_fan_mode(int_fan_mode)
 
-    def set_temperature(self, **kwargs: Any) -> None:
+    async def async_set_temperature(self, **kwargs: Any) -> None:
         temperature = kwargs.get(ATTR_TEMPERATURE)
         if temperature is not None:
-            self._client.set_temperature(int(temperature))
+            await self._client.set_temperature(int(temperature))
 
-    def update(self) -> None:
-        self._client.poll()
+    async def async_update(self) -> None:
+        await self._client.poll()

@@ -22,7 +22,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     try:
         client = S21Client(host, port)
-        client.poll()
+        await client.poll()
     except Exception as ex:
         raise ConfigEntryNotReady(
             "Failed to connect to modbusTCP://%s:%d", host, port
