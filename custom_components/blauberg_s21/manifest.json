@@ -8,6 +8,6 @@
   "integration_type": "device",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/jvitkauskas/homeassistant_blauberg_s21/issues",
-  "requirements": ["pybls21==4.0.2"],
-  "version": "0.2.3"
+  "requirements": ["pybls21==4.0.3"],
+  "version": "0.2.4"
 }
