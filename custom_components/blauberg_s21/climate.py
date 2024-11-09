@@ -175,6 +175,40 @@ class BlS21ClimateEntity(ClimateEntity):
         if self._client.device:
             return self._client.device.sw_version
 
+
+    """ MaNi additions - additional attributes """
+    @property
+    def current_intake_temperature(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.current_intake_temperature
+
+    @property
+    def current_temperature_fresh_air(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.current_temperature_fresh_air
+
+    @property
+    def current_temperature_consumed_air(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.current_temperature_consumed_air
+
+    @property
+    def filter_countdown(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.filter_countdown
+
+    @property
+    def pressure_air_incoming(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.pressure_air_incoming
+
+    @property
+    def pressure_air_outgoing(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.pressure_air_outgoing
+    """ EO MaNi additions - additional attributes """
+
+
     @property
     def icon(self) -> Optional[str]:
         if self._client.device:
