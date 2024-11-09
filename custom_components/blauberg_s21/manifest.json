@@ -1,13 +1,13 @@
 {
   "domain": "blauberg_s21",
-  "name": "Blauberg S21",
+  "name": "Blauberg S21 (extended)",
   "codeowners": ["@jvitkauskas"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/jvitkauskas/homeassistant_blauberg_s21",
+  "documentation": "https://github.com/marni-xyz/homeassistant_blauberg_s21",
   "integration_type": "device",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/jvitkauskas/homeassistant_blauberg_s21/issues",
-  "requirements": ["pybls21==4.0.3"],
+  "issue_tracker": "https://github.com/marni-xyz/homeassistant_blauberg_s21/issues",
+  "requirements": ["pybls21ext==4.0.3"],
   "version": "0.2.4"
 }
