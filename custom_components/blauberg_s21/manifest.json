@@ -1,5 +1,5 @@
 {
-  "domain": "blauberg_s21",
+  "domain": "blauberg_s21_ext",
   "name": "Blauberg S21 (extended)",
   "codeowners": ["@jvitkauskas"],
   "config_flow": true,
