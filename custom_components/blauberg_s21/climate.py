@@ -12,11 +12,7 @@ from homeassistant.components.climate.const import (
     FAN_HIGH,
     FAN_LOW,
     FAN_MEDIUM,
-    HVACMode.AUTO,
-    HVACMode.COOL,
-    HVACMode.FAN_ONLY,
-    HVACMode.HEAT,
-    HVACMode.OFF,
+    HVACModes,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
