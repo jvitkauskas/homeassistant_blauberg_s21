@@ -1,3 +1,3 @@
 """Constants for the Blauberg S21 integration."""
 
-DOMAIN = "blauberg_s21"
+DOMAIN = "blauberg_s21_ext"
