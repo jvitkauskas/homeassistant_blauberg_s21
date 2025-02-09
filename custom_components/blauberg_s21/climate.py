@@ -12,11 +12,6 @@ from homeassistant.components.climate.const import (
     FAN_HIGH,
     FAN_LOW,
     FAN_MEDIUM,
-    HVAC_MODE_AUTO,
-    HVAC_MODE_COOL,
-    HVAC_MODE_FAN_ONLY,
-    HVAC_MODE_HEAT,
-    HVAC_MODE_OFF,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
@@ -29,11 +24,11 @@ from pybls21.models import HVACMode as BlS21HVACMode
 from .const import DOMAIN
 
 HA_TO_S21_HVACMODE = {
-    HVAC_MODE_OFF: BlS21HVACMode.OFF,
-    HVAC_MODE_HEAT: BlS21HVACMode.HEAT,
-    HVAC_MODE_COOL: BlS21HVACMode.COOL,
-    HVAC_MODE_AUTO: BlS21HVACMode.AUTO,
-    HVAC_MODE_FAN_ONLY: BlS21HVACMode.FAN_ONLY,
+    HVACMode.OFF: BlS21HVACMode.OFF,
+    HVACMode.HEAT: BlS21HVACMode.HEAT,
+    HVACMode.COOL: BlS21HVACMode.COOL,
+    HVACMode.AUTO: BlS21HVACMode.AUTO,
+    HVACMode.FAN_ONLY: BlS21HVACMode.FAN_ONLY,
 }
 
 S21_TO_HA_HVACMODE = {v: k for k, v in HA_TO_S21_HVACMODE.items()}
