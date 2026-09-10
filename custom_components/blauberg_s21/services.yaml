@@ -1,0 +1,18 @@
+reset_maintenance_timer:
+  name: Reset filter maintenance timer
+  description: Reset the maintenance timer for the filter.
+  target:
+    entity:
+      integration: blauberg_s21
+      domain:
+        - sensor
+  fields: {}
+reset_alarm:
+  name: Reset alarm
+  description: Reset alarm.
+  target:
+    entity:
+      integration: blauberg_s21
+      domain:
+        - sensor
+  fields: {}
