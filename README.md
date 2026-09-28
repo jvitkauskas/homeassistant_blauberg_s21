@@ -27,8 +27,10 @@ detect duplicates across host/IP changes; it does not replace entity IDs.
 The climate entity supports power, HVAC mode, target temperature, and fan mode.
 Three-speed devices use low/medium/high labels; other devices expose numbered
 levels. `custom` selects manual fan mode. The displayed current temperature is
-the supply outlet temperature, not necessarily the room temperature. HVAC action
-is inferred from the configured mode and supply temperatures.
+the supply outlet temperature, not necessarily the room temperature. The climate
+entity does not report heating/cooling activity: pybls21 5.1.0 infers that value
+rather than exposing measured heater/cooler operation. The selected HVAC mode
+and temperature target remain available.
 
 ## Sensors and controls
 
@@ -40,17 +42,23 @@ network requests. The integration exposes:
 - Supply/extract fan **RPM**, and separate optional fan-performance percentages.
 - Remaining filter-service time in hours, including the device's day/hour/minute
   components; timer duration and accumulated operating time.
-- Alarm severity with active numeric codes in the `alarm_codes` attribute, raw
-  filter-status code, and optional bypass/rotor position.
+- “Filter needs attention” and “Problem” binary sensors, plus alarm severity with
+  active numeric codes in the `alarm_codes` attribute. Raw filter status remains
+  available as a diagnostic sensor.
+- Optional bypass position or rotor control-position reading, only when fitted.
 - Buttons to reset the filter timer and alarms.
-- Timer and weekly-schedule switches; an optional boost switch.
+- Timer and weekly-schedule switches; an optional read-only “Boost active” sensor.
+  The previous proposed boost switch wrote the external boost-input enable flag
+  while reading a different active-state flag, so it is no longer exposed.
 - A manual fan-percentage slider, which sets the configured percentage and then
   selects manual fan mode (255).
 - A bypass/rotor mode selector when fitted, and a manual-position slider only
   for analogue bypass/rotor hardware.
 
-Optional/diagnostic sensors and boost are disabled by default where appropriate;
-enable them in the entity registry if your device supports them. A successful
+RPM, exhaust temperature, timer controls, boost status, and other optional
+engineering readings are disabled by default for new entities. Enable them in
+the entity registry if useful. Existing user choices are preserved. All entities
+belong to one physical S21 device; the climate entity remains its primary control. A successful
 Modbus response can still contain an unavailable value: `0xFFFF` percentages and
 faulty temperature sensors show as unknown, not as zero or an extreme reading.
 Valid zero readings stay zero.
@@ -59,11 +67,30 @@ Timer/schedule switches toggle settings already configured on the unit; they do
 not edit schedules or timer durations. The filter-reset button restarts the
 existing interval; **changing that interval is not yet implemented**.
 
-For bypass/rotor controls, closed means bypass closed / rotor running; open means
-bypass open / discrete rotor stopped, or manual control for analogue hardware.
-Setting a manual position does not change the mode. Position 0 means closed
-bypass / maximum rotor speed; 100 means open bypass / stopped rotor. Reload the
-integration if the installed bypass/rotor type is changed on the controller.
+Filter attention uses the controller's IR31 status: 0 means clean; 1 means the
+intake filter is clogged; 2 means the extract filter is clogged; 3 means both
+filters are clogged or the replacement timer has expired. The combined state 3
+cannot distinguish those causes. A zero countdown alone does not indicate a
+problem. The Problem sensor includes both alarms and warnings (IR38); unknown
+status values remain unknown instead of appearing healthy.
+
+Bypass controls display Closed/Open/Automatic for discrete hardware and
+Closed/Manual/Automatic for analogue hardware. Rotor controls display
+Running/Stopped/Automatic or Running/Manual/Automatic, respectively. Stored
+select values stay `closed`, `open`, and `auto` for existing automations.
+
+The analogue rotor's manual-speed slider uses 0% = stopped and 100% = maximum
+speed. The integration converts to the device's reversed control scale. The
+bypass slider retains 0% = closed and 100% = open. Setting either percentage does
+not implicitly change the mode; choose Manual to apply the manual setting.
+The optional rotor control-position sensor remains the raw IR51 percentage;
+its meaning as actual rotor speed has not been verified. Reload the integration
+if the installed bypass/rotor hardware type changes.
+
+If you installed an earlier PR build, the analogue rotor number keeps its entity
+ID but now uses the reversed, speed-oriented scale: convert old automation
+values with `100 - old_value`. This affects analogue rotors only. The misleading
+boost switch is replaced by a separate read-only sensor.
 
 Every successful control fetches confirmed device state. Downloads from the
 integration's **Diagnostics** menu contain cached device readings and update

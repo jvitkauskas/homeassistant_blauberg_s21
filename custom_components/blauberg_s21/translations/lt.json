@@ -116,7 +116,10 @@
         }
       },
       "bypass_position": {
-        "name": "Apėjimo sklendės / rotoriaus padėtis"
+        "name": "Apėjimo padėtis"
+      },
+      "rotor_position": {
+        "name": "Rotoriaus valdymo padėtis"
       }
     },
     "button": {
@@ -128,9 +131,6 @@
       }
     },
     "switch": {
-      "boost": {
-        "name": "Intensyvus režimas"
-      },
       "timer": {
         "name": "Laikmatis"
       },
@@ -144,16 +144,54 @@
       },
       "manual_bypass_position": {
         "name": "Rankinė apėjimo sklendės / rotoriaus padėtis"
+      },
+      "manual_rotor_speed": {
+        "name": "Rankinis rotoriaus greitis"
       }
     },
     "select": {
       "bypass_mode": {
-        "name": "Apėjimo sklendės / rotoriaus režimas",
+        "name": "Apėjimo režimas",
         "state": {
-          "closed": "Uždaryta / rotorius veikia",
-          "open": "Atidaryta / rankinis",
+          "closed": "Uždarytas",
+          "open": "Atidarytas",
           "auto": "Automatinis"
         }
+      },
+      "bypass_analogue_mode": {
+        "name": "Apėjimo režimas",
+        "state": {
+          "closed": "Uždarytas",
+          "open": "Rankinis",
+          "auto": "Automatinis"
+        }
+      },
+      "rotor_mode": {
+        "name": "Rotoriaus režimas",
+        "state": {
+          "closed": "Veikia",
+          "open": "Sustabdytas",
+          "auto": "Automatinis"
+        }
+      },
+      "rotor_analogue_mode": {
+        "name": "Rotoriaus režimas",
+        "state": {
+          "closed": "Veikia",
+          "open": "Rankinis",
+          "auto": "Automatinis"
+        }
+      }
+    },
+    "binary_sensor": {
+      "filter_attention": {
+        "name": "Reikia patikrinti filtrą"
+      },
+      "problem": {
+        "name": "Problema"
+      },
+      "boost_active": {
+        "name": "Aktyvus sustiprintas vėdinimas"
       }
     }
   }

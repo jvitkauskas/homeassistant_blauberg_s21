@@ -9,9 +9,6 @@
       }
     },
     "switch": {
-      "boost": {
-        "default": "mdi:fan-plus"
-      },
       "timer": {
         "default": "mdi:timer-outline"
       },
@@ -25,10 +22,22 @@
       },
       "manual_bypass_position": {
         "default": "mdi:valve"
+      },
+      "manual_rotor_speed": {
+        "default": "mdi:rotate-right"
       }
     },
     "select": {
       "bypass_mode": {
+        "default": "mdi:valve"
+      },
+      "rotor_mode": {
+        "default": "mdi:rotate-right"
+      },
+      "rotor_analogue_mode": {
+        "default": "mdi:rotate-right"
+      },
+      "bypass_analogue_mode": {
         "default": "mdi:valve"
       }
     },
@@ -53,6 +62,17 @@
       },
       "alarm_state": {
         "default": "mdi:alert-circle-outline"
+      },
+      "rotor_position": {
+        "default": "mdi:rotate-right"
+      }
+    },
+    "binary_sensor": {
+      "boost_active": {
+        "default": "mdi:fan-plus"
+      },
+      "filter_attention": {
+        "default": "mdi:filter"
       }
     }
   }

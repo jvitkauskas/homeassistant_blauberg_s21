@@ -113,7 +113,10 @@
         }
       },
       "bypass_position": {
-        "name": "Bypass/rotor position"
+        "name": "Bypass position"
+      },
+      "rotor_position": {
+        "name": "Rotor control position"
       }
     },
     "button": {
@@ -125,9 +128,6 @@
       }
     },
     "switch": {
-      "boost": {
-        "name": "Boost"
-      },
       "timer": {
         "name": "Timer"
       },
@@ -141,16 +141,54 @@
       },
       "manual_bypass_position": {
         "name": "Manual bypass/rotor position"
+      },
+      "manual_rotor_speed": {
+        "name": "Manual rotor speed"
       }
     },
     "select": {
       "bypass_mode": {
-        "name": "Bypass/rotor mode",
+        "name": "Bypass mode",
         "state": {
-          "closed": "Closed / rotor running",
-          "open": "Open / manual",
+          "closed": "Closed",
+          "open": "Open",
           "auto": "Automatic"
         }
+      },
+      "bypass_analogue_mode": {
+        "name": "Bypass mode",
+        "state": {
+          "closed": "Closed",
+          "open": "Manual",
+          "auto": "Automatic"
+        }
+      },
+      "rotor_mode": {
+        "name": "Rotor mode",
+        "state": {
+          "closed": "Running",
+          "open": "Stopped",
+          "auto": "Automatic"
+        }
+      },
+      "rotor_analogue_mode": {
+        "name": "Rotor mode",
+        "state": {
+          "closed": "Running",
+          "open": "Manual",
+          "auto": "Automatic"
+        }
+      }
+    },
+    "binary_sensor": {
+      "filter_attention": {
+        "name": "Filter needs attention"
+      },
+      "problem": {
+        "name": "Problem"
+      },
+      "boost_active": {
+        "name": "Boost active"
       }
     }
   }
