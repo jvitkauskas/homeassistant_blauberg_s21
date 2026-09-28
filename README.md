@@ -142,6 +142,8 @@ These migrations cover releases from this repository, not the differently named
 python -m venv .venv
 . .venv/bin/activate
 pip install -r requirements-test.txt
+python scripts/check_metadata.py
+python -m unittest discover -s scripts -p 'test_*.py' -v
 ruff check .
 ruff format --check .
 mypy
@@ -151,6 +153,43 @@ pytest -q
 Tests use Home Assistant's actual custom-component test framework and a mocked
 client. No real device is contacted. CI runs tests, strict typing, formatting,
 HACS validation, and hassfest; test coverage must stay at or above 95%.
+
+The test matrix covers Python 3.14.2 and the latest 3.14 patch with the pinned
+Home Assistant 2026.9.4 baseline. A third job resolves the newest compatible
+Home Assistant/test-framework pair on Python 3.14 using
+`requirements-compatibility.txt`. It does not replace the pinned baseline.
+All three jobs run on PRs, main, version tags, a weekly schedule, and manual
+dispatch. The logs report the exact Home Assistant, framework, and library
+versions tested. HACS and hassfest also run daily against their upstream validators.
+To reproduce the compatibility job, install `requirements-compatibility.txt`
+with `pip install --upgrade` in a separate virtual environment, then run
+`python scripts/check_metadata.py --ha-channel latest` and the checks above
+(omit the baseline-only `python scripts/check_metadata.py` command).
+
+Runtime dependencies used by both test environments live in
+`requirements-common.txt`; CI checks them against the integration manifest and
+the installed packages. The pinned test framework must install exactly the
+minimum HA version declared in `hacs.json`. Update those together when raising
+the minimum version. Dependabot checks GitHub Actions versions weekly.
+
+## Releases
+
+Keep the manifest version at the next intended release while PRs are pending;
+merging a PR does not create a tag or publish a release.
+
+After merging the release's changes into main, open **Actions → Release → Run
+workflow**, choose **main**, and enter the manifest version prefixed with `v`
+(currently `v0.6.0`). The workflow checks the tag/version match and runs the
+complete test matrix, HACS validation, and hassfest before creating the GitHub
+tag and release with generated release notes. It releases the exact commit
+selected when the workflow starts, even if main advances while checks run.
+Only the final publishing job has repository write permission. An existing tag
+pointing at another commit is rejected; tags are never moved.
+
+Use this workflow instead of publishing manually so validation happens before
+the release becomes available. Checks also run for manually pushed version
+tags, but cannot prevent a release created outside this workflow. HACS installs
+GitHub releases; this integration does not need a PyPI publishing job.
 
 The shared-coordinator approach builds on the direction proposed by
 [Jonas Vogel (@birdie1) in PR #15](https://github.com/jvitkauskas/homeassistant_blauberg_s21/pull/15).
