@@ -8,19 +8,34 @@
       "cannot_connect": "Nepavyko prisijungti",
       "unknown": "Netikėta klaida",
       "unsupported_device": "Nepalaikomas įrenginys",
-      "invalid_host": "Įveskite serverio vardą arba IP adresą"
+      "invalid_host": "Įveskite serverio vardą arba IP adresą",
+      "wrong_device": "Pasirinktas įrenginys neatitinka šio valdiklio.",
+      "cannot_identify": "Nepavyko patikrinti valdiklio ID. Patikrinkite UDP 4000 prievado ryšį ir bandykite dar kartą."
     },
     "step": {
-      "user": {
+      "reconfigure": {
         "data": {
           "host": "Adresas",
           "port": "Prievadas"
         }
       },
-      "reconfigure": {
+      "manual": {
         "data": {
           "host": "Adresas",
           "port": "Prievadas"
+        },
+        "description": "Patvirtinkite adresą ir Modbus prievadą."
+      },
+      "user": {
+        "menu_options": {
+          "discovered": "Pasirinkti rastą įrenginį",
+          "manual": "Įvesti ryšio duomenis rankiniu būdu"
+        }
+      },
+      "discovered": {
+        "title": "Pasirinkti įrenginį",
+        "data": {
+          "device": "Įrenginys"
         }
       }
     }
@@ -38,6 +53,151 @@
             }
           }
         }
+      }
+    },
+    "sensor": {
+      "supply_temperature": {
+        "name": "Tiekiamo oro temperatūra"
+      },
+      "intake_temperature": {
+        "name": "Lauko oro temperatūra"
+      },
+      "extract_temperature": {
+        "name": "Iš patalpų šalinamo oro temperatūra"
+      },
+      "exhaust_temperature": {
+        "name": "Į lauką išmetamo oro temperatūra"
+      },
+      "humidity": {
+        "name": "Drėgmė"
+      },
+      "supply_pressure": {
+        "name": "Tiekiamo oro slėgis"
+      },
+      "extract_pressure": {
+        "name": "Šalinamo oro slėgis"
+      },
+      "supply_airflow": {
+        "name": "Tiekiamo oro srautas"
+      },
+      "extract_airflow": {
+        "name": "Šalinamo oro srautas"
+      },
+      "supply_fan_speed": {
+        "name": "Tiekimo ventiliatoriaus sūkiai"
+      },
+      "extract_fan_speed": {
+        "name": "Šalinimo ventiliatoriaus sūkiai"
+      },
+      "supply_fan_speed_percent": {
+        "name": "Tiekimo ventiliatoriaus našumas"
+      },
+      "extract_fan_speed_percent": {
+        "name": "Šalinimo ventiliatoriaus našumas"
+      },
+      "timer_countdown": {
+        "name": "Likęs laikmačio laikas"
+      },
+      "operating_time": {
+        "name": "Veikimo laikas"
+      },
+      "filter_remaining": {
+        "name": "Laikas iki filtro keitimo"
+      },
+      "filter_state": {
+        "name": "Filtro būsenos kodas"
+      },
+      "alarm_state": {
+        "name": "Aliarmas",
+        "state": {
+          "none": "Nėra",
+          "alarm": "Aliarmas",
+          "warning": "Įspėjimas"
+        }
+      },
+      "bypass_position": {
+        "name": "Apėjimo padėtis"
+      },
+      "rotor_position": {
+        "name": "Rotoriaus valdymo padėtis"
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Atstatyti filtro laikmatį"
+      },
+      "reset_alarm": {
+        "name": "Atstatyti aliarmą"
+      }
+    },
+    "switch": {
+      "timer": {
+        "name": "Laikmatis"
+      },
+      "schedule": {
+        "name": "Savaitės programa"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "name": "Rankinis ventiliatoriaus našumas"
+      },
+      "manual_bypass_position": {
+        "name": "Rankinė apėjimo sklendės / rotoriaus padėtis"
+      },
+      "manual_rotor_speed": {
+        "name": "Rankinis rotoriaus greitis"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "name": "Apėjimo režimas",
+        "state": {
+          "closed": "Uždarytas",
+          "open": "Atidarytas",
+          "auto": "Automatinis"
+        }
+      },
+      "bypass_analogue_mode": {
+        "name": "Apėjimo režimas",
+        "state": {
+          "closed": "Uždarytas",
+          "open": "Rankinis",
+          "auto": "Automatinis"
+        }
+      },
+      "rotor_mode": {
+        "name": "Rotoriaus režimas",
+        "state": {
+          "closed": "Veikia",
+          "open": "Sustabdytas",
+          "auto": "Automatinis"
+        }
+      },
+      "rotor_analogue_mode": {
+        "name": "Rotoriaus režimas",
+        "state": {
+          "closed": "Veikia",
+          "open": "Rankinis",
+          "auto": "Automatinis"
+        }
+      }
+    },
+    "binary_sensor": {
+      "filter_attention": {
+        "name": "Reikia patikrinti filtrą"
+      },
+      "problem": {
+        "name": "Problema"
+      },
+      "boost_active": {
+        "name": "Aktyvus sustiprintas vėdinimas"
+      },
+      "heating_active": {
+        "name": "Aktyvus šildymas"
+      },
+      "cooling_active": {
+        "name": "Aktyvus vėsinimas"
       }
     }
   }

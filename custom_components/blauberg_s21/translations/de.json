@@ -8,19 +8,34 @@
       "cannot_connect": "Verbindung fehlgeschlagen",
       "unknown": "Unerwarteter Fehler",
       "unsupported_device": "Nicht unterstütztes Gerät",
-      "invalid_host": "Geben Sie einen Hostnamen oder eine IP-Adresse ein"
+      "invalid_host": "Geben Sie einen Hostnamen oder eine IP-Adresse ein",
+      "wrong_device": "Das ausgewählte Gerät entspricht nicht diesem Controller.",
+      "cannot_identify": "Die Controller-ID konnte nicht geprüft werden. UDP-Port 4000 prüfen und erneut versuchen."
     },
     "step": {
-      "user": {
+      "reconfigure": {
         "data": {
           "host": "Host",
           "port": "Port"
         }
       },
-      "reconfigure": {
+      "manual": {
         "data": {
           "host": "Host",
           "port": "Port"
+        },
+        "description": "Host und Modbus-Port bestätigen."
+      },
+      "user": {
+        "menu_options": {
+          "discovered": "Ein gefundenes Gerät auswählen",
+          "manual": "Verbindung manuell eingeben"
+        }
+      },
+      "discovered": {
+        "title": "Gerät auswählen",
+        "data": {
+          "device": "Gerät"
         }
       }
     }
@@ -35,6 +50,151 @@
             }
           }
         }
+      }
+    },
+    "sensor": {
+      "supply_temperature": {
+        "name": "Zulufttemperatur"
+      },
+      "intake_temperature": {
+        "name": "Außenlufttemperatur"
+      },
+      "extract_temperature": {
+        "name": "Ablufttemperatur"
+      },
+      "exhaust_temperature": {
+        "name": "Fortlufttemperatur"
+      },
+      "humidity": {
+        "name": "Luftfeuchtigkeit"
+      },
+      "supply_pressure": {
+        "name": "Zuluftdruck"
+      },
+      "extract_pressure": {
+        "name": "Abluftdruck"
+      },
+      "supply_airflow": {
+        "name": "Zuluftvolumenstrom"
+      },
+      "extract_airflow": {
+        "name": "Abluftvolumenstrom"
+      },
+      "supply_fan_speed": {
+        "name": "Zuluftventilator-Drehzahl"
+      },
+      "extract_fan_speed": {
+        "name": "Abluftventilator-Drehzahl"
+      },
+      "supply_fan_speed_percent": {
+        "name": "Zuluftventilator-Leistung"
+      },
+      "extract_fan_speed_percent": {
+        "name": "Abluftventilator-Leistung"
+      },
+      "timer_countdown": {
+        "name": "Verbleibende Timerzeit"
+      },
+      "operating_time": {
+        "name": "Betriebszeit"
+      },
+      "filter_remaining": {
+        "name": "Verbleibende Filterlaufzeit"
+      },
+      "filter_state": {
+        "name": "Filterstatuscode"
+      },
+      "alarm_state": {
+        "name": "Alarm",
+        "state": {
+          "none": "Keiner",
+          "alarm": "Alarm",
+          "warning": "Warnung"
+        }
+      },
+      "bypass_position": {
+        "name": "Bypassposition"
+      },
+      "rotor_position": {
+        "name": "Rotorsteuerposition"
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Filtertimer zurücksetzen"
+      },
+      "reset_alarm": {
+        "name": "Alarm zurücksetzen"
+      }
+    },
+    "switch": {
+      "timer": {
+        "name": "Timer"
+      },
+      "schedule": {
+        "name": "Wochenprogramm"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "name": "Manuelle Lüfterleistung"
+      },
+      "manual_bypass_position": {
+        "name": "Manuelle Bypass-/Rotorposition"
+      },
+      "manual_rotor_speed": {
+        "name": "Manuelle Rotordrehzahl"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "name": "Bypassmodus",
+        "state": {
+          "closed": "Geschlossen",
+          "open": "Offen",
+          "auto": "Automatisch"
+        }
+      },
+      "bypass_analogue_mode": {
+        "name": "Bypassmodus",
+        "state": {
+          "closed": "Geschlossen",
+          "open": "Manuell",
+          "auto": "Automatisch"
+        }
+      },
+      "rotor_mode": {
+        "name": "Rotormodus",
+        "state": {
+          "closed": "Läuft",
+          "open": "Gestoppt",
+          "auto": "Automatisch"
+        }
+      },
+      "rotor_analogue_mode": {
+        "name": "Rotormodus",
+        "state": {
+          "closed": "Läuft",
+          "open": "Manuell",
+          "auto": "Automatisch"
+        }
+      }
+    },
+    "binary_sensor": {
+      "filter_attention": {
+        "name": "Filterwartung erforderlich"
+      },
+      "problem": {
+        "name": "Problem"
+      },
+      "boost_active": {
+        "name": "Boost aktiv"
+      },
+      "heating_active": {
+        "name": "Heizung aktiv"
+      },
+      "cooling_active": {
+        "name": "Kühlung aktiv"
       }
     }
   }

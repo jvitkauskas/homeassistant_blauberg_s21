@@ -1,4 +1,2 @@
+-r requirements-common.txt
 pytest-homeassistant-custom-component==0.13.367
-pybls21==5.0.0
-ruff>=0.14
-mypy>=1.19

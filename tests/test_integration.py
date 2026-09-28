@@ -48,7 +48,7 @@ async def test_availability_recovery(hass, entry, client, snapshot):
     state = hass.states.get("climate.blauberg_s21")
     assert state.state == "fan_only"
     assert state.attributes["current_temperature"] is None
-    assert state.attributes.get("hvac_action") is None
+    assert state.attributes["hvac_action"] == "fan"
 
 
 @pytest.mark.parametrize(

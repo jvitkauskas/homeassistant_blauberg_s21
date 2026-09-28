@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag matching the manifest version (for example v0.6.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+# Serialize releases without interrupting a run that may already have made a tag.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  branch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require main
+        run: test "$GITHUB_REF" = refs/heads/main
+
+  tests:
+    needs: branch
+    uses: ./.github/workflows/tests.yaml
+    with:
+      release-tag: ${{ inputs.tag }}
+
+  hacs:
+    needs: branch
+    uses: ./.github/workflows/hacs.yaml
+
+  hassfest:
+    needs: branch
+    uses: ./.github/workflows/hassfest.yaml
+
+  release:
+    needs: [tests, hacs, hassfest]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Publish the tested commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          # A rerun may reuse a tag left by a failed release, but never another commit.
+          if git show-ref --verify --quiet "refs/tags/$RELEASE_TAG"; then
+            test "$(git rev-parse "$RELEASE_TAG^{commit}")" = "$GITHUB_SHA"
+          fi
+          gh release create "$RELEASE_TAG" \
+            --target "$GITHUB_SHA" \
+            --title "$RELEASE_TAG" \
+            --generate-notes

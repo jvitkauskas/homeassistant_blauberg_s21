@@ -1,16 +1,29 @@
 {
   "config": {
     "step": {
-      "user": {
+      "reconfigure": {
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "port": "[%key:common::config_flow::data::port%]"
         }
       },
-      "reconfigure": {
+      "manual": {
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "port": "[%key:common::config_flow::data::port%]"
+        },
+        "description": "Confirm the host and Modbus port."
+      },
+      "user": {
+        "menu_options": {
+          "discovered": "Choose a discovered device",
+          "manual": "Enter connection manually"
+        }
+      },
+      "discovered": {
+        "title": "Select a device",
+        "data": {
+          "device": "Device"
         }
       }
     },
@@ -18,7 +31,9 @@
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
       "unknown": "[%key:common::config_flow::error::unknown%]",
       "unsupported_device": "Unsupported device",
-      "invalid_host": "Enter a host name or IP address"
+      "invalid_host": "Enter a host name or IP address",
+      "wrong_device": "The selected device does not match this controller.",
+      "cannot_identify": "Could not verify the controller ID. Check UDP port 4000 connectivity and try again."
     },
     "abort": {
       "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
@@ -35,6 +50,151 @@
             }
           }
         }
+      }
+    },
+    "sensor": {
+      "supply_temperature": {
+        "name": "Supply temperature"
+      },
+      "intake_temperature": {
+        "name": "Intake temperature"
+      },
+      "extract_temperature": {
+        "name": "Extract temperature"
+      },
+      "exhaust_temperature": {
+        "name": "Exhaust temperature"
+      },
+      "humidity": {
+        "name": "Humidity"
+      },
+      "supply_pressure": {
+        "name": "Supply pressure"
+      },
+      "extract_pressure": {
+        "name": "Extract pressure"
+      },
+      "supply_airflow": {
+        "name": "Supply airflow"
+      },
+      "extract_airflow": {
+        "name": "Extract airflow"
+      },
+      "supply_fan_speed": {
+        "name": "Supply fan speed"
+      },
+      "extract_fan_speed": {
+        "name": "Extract fan speed"
+      },
+      "supply_fan_speed_percent": {
+        "name": "Supply fan performance"
+      },
+      "extract_fan_speed_percent": {
+        "name": "Extract fan performance"
+      },
+      "timer_countdown": {
+        "name": "Timer remaining"
+      },
+      "operating_time": {
+        "name": "Operating time"
+      },
+      "filter_remaining": {
+        "name": "Filter service remaining"
+      },
+      "filter_state": {
+        "name": "Filter status code"
+      },
+      "alarm_state": {
+        "name": "Alarm",
+        "state": {
+          "none": "None",
+          "alarm": "Alarm",
+          "warning": "Warning"
+        }
+      },
+      "bypass_position": {
+        "name": "Bypass position"
+      },
+      "rotor_position": {
+        "name": "Rotor control position"
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Reset filter timer"
+      },
+      "reset_alarm": {
+        "name": "Reset alarm"
+      }
+    },
+    "switch": {
+      "timer": {
+        "name": "Timer"
+      },
+      "schedule": {
+        "name": "Weekly schedule"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "name": "Manual fan speed"
+      },
+      "manual_bypass_position": {
+        "name": "Manual bypass/rotor position"
+      },
+      "manual_rotor_speed": {
+        "name": "Manual rotor speed"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "name": "Bypass mode",
+        "state": {
+          "closed": "Closed",
+          "open": "Open",
+          "auto": "Automatic"
+        }
+      },
+      "bypass_analogue_mode": {
+        "name": "Bypass mode",
+        "state": {
+          "closed": "Closed",
+          "open": "Manual",
+          "auto": "Automatic"
+        }
+      },
+      "rotor_mode": {
+        "name": "Rotor mode",
+        "state": {
+          "closed": "Running",
+          "open": "Stopped",
+          "auto": "Automatic"
+        }
+      },
+      "rotor_analogue_mode": {
+        "name": "Rotor mode",
+        "state": {
+          "closed": "Running",
+          "open": "Manual",
+          "auto": "Automatic"
+        }
+      }
+    },
+    "binary_sensor": {
+      "filter_attention": {
+        "name": "Filter needs attention"
+      },
+      "problem": {
+        "name": "Problem"
+      },
+      "boost_active": {
+        "name": "Boost active"
+      },
+      "heating_active": {
+        "name": "Heating active"
+      },
+      "cooling_active": {
+        "name": "Cooling active"
       }
     }
   }

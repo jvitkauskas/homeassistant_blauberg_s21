@@ -36,6 +36,8 @@ def snapshot():
         model="S21",
         sw_version="0.36",
         is_boosting=False,
+        is_heating=False,
+        is_cooling=False,
         current_intake_temperature=16.5,
         manual_fan_speed_percent=50,
         max_fan_level=3,
@@ -70,3 +72,18 @@ def entry(hass):
     )
     entry.add_to_hass(hass)
     return entry
+
+
+@pytest.fixture(autouse=True)
+def discovery():
+    with (
+        patch(
+            "custom_components.blauberg_s21.config_flow.async_discover_devices",
+            return_value=(),
+        ) as scan,
+        patch(
+            "custom_components.blauberg_s21.config_flow.async_identify_device",
+            return_value=None,
+        ) as identify,
+    ):
+        yield scan, identify

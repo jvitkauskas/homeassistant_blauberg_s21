@@ -1,0 +1,85 @@
+{
+  "entity": {
+    "button": {
+      "reset_filter": {
+        "default": "mdi:filter-remove"
+      },
+      "reset_alarm": {
+        "default": "mdi:alarm-off"
+      }
+    },
+    "switch": {
+      "timer": {
+        "default": "mdi:timer-outline"
+      },
+      "schedule": {
+        "default": "mdi:calendar-clock"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "default": "mdi:fan"
+      },
+      "manual_bypass_position": {
+        "default": "mdi:valve"
+      },
+      "manual_rotor_speed": {
+        "default": "mdi:rotate-right"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "default": "mdi:valve"
+      },
+      "rotor_mode": {
+        "default": "mdi:rotate-right"
+      },
+      "rotor_analogue_mode": {
+        "default": "mdi:rotate-right"
+      },
+      "bypass_analogue_mode": {
+        "default": "mdi:valve"
+      }
+    },
+    "sensor": {
+      "filter_state": {
+        "default": "mdi:filter"
+      },
+      "supply_fan_speed": {
+        "default": "mdi:fan"
+      },
+      "extract_fan_speed": {
+        "default": "mdi:fan"
+      },
+      "supply_fan_speed_percent": {
+        "default": "mdi:fan"
+      },
+      "extract_fan_speed_percent": {
+        "default": "mdi:fan"
+      },
+      "bypass_position": {
+        "default": "mdi:valve"
+      },
+      "alarm_state": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "rotor_position": {
+        "default": "mdi:rotate-right"
+      }
+    },
+    "binary_sensor": {
+      "boost_active": {
+        "default": "mdi:fan-plus"
+      },
+      "filter_attention": {
+        "default": "mdi:filter"
+      },
+      "heating_active": {
+        "default": "mdi:radiator"
+      },
+      "cooling_active": {
+        "default": "mdi:snowflake"
+      }
+    }
+  }
+}

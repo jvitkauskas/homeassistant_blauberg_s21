@@ -1,0 +1,5 @@
+-r requirements-common.txt
+# Resolve Home Assistant together with its matching test framework.
+# Never upgrade Home Assistant underneath the pinned baseline framework.
+homeassistant
+pytest-homeassistant-custom-component
