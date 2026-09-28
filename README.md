@@ -179,7 +179,7 @@ merging a PR does not create a tag or publish a release.
 
 After merging the release's changes into main, open **Actions → Release → Run
 workflow**, choose **main**, and enter the manifest version prefixed with `v`
-(currently `v0.6.0`). The workflow checks the tag/version match and runs the
+(currently `v0.6.1`). The workflow checks the tag/version match and runs the
 complete test matrix, HACS validation, and hassfest before creating the GitHub
 tag and release with generated release notes. It releases the exact commit
 selected when the workflow starts, even if main advances while checks run.
@@ -201,3 +201,9 @@ The sensor, maintenance-button, and manual-fan-control designs adapt the work in
 with attribution retained in this README and the commit co-author credit. The
 implementation uses pybls21 5 snapshots and confirmed updates rather than
 embedding a modified Modbus client in the integration.
+
+The bundled icons and logos in `custom_components/blauberg_s21/brand/` are
+unchanged copies of the integration's existing artwork from
+[Home Assistant's brands repository](https://github.com/home-assistant/brands/tree/2406ed3b9dec262f2a17cde893227c523ebe2838/custom_integrations/blauberg_s21).
+They are used to identify supported hardware. Product names and trademarks
+belong to their respective owners; their use does not imply endorsement.
