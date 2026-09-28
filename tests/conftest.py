@@ -70,3 +70,18 @@ def entry(hass):
     )
     entry.add_to_hass(hass)
     return entry
+
+
+@pytest.fixture(autouse=True)
+def discovery():
+    with (
+        patch(
+            "custom_components.blauberg_s21.config_flow.async_discover_devices",
+            return_value=(),
+        ) as scan,
+        patch(
+            "custom_components.blauberg_s21.config_flow.async_identify_device",
+            return_value=None,
+        ) as identify,
+    ):
+        yield scan, identify

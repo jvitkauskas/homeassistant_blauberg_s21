@@ -8,19 +8,34 @@
       "cannot_connect": "Failed to connect",
       "unknown": "Unexpected error",
       "unsupported_device": "Unsupported device",
-      "invalid_host": "Enter a host name or IP address"
+      "invalid_host": "Enter a host name or IP address",
+      "wrong_device": "The selected device does not match this controller.",
+      "cannot_identify": "Could not verify the controller ID. Check UDP port 4000 connectivity and try again."
     },
     "step": {
-      "user": {
+      "reconfigure": {
         "data": {
           "host": "Host",
           "port": "Port"
         }
       },
-      "reconfigure": {
+      "manual": {
         "data": {
           "host": "Host",
           "port": "Port"
+        },
+        "description": "Confirm the host and Modbus port."
+      },
+      "user": {
+        "menu_options": {
+          "discovered": "Choose a discovered device",
+          "manual": "Enter connection manually"
+        }
+      },
+      "discovered": {
+        "title": "Select a device",
+        "data": {
+          "device": "Device"
         }
       }
     }

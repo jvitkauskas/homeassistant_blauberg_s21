@@ -8,19 +8,34 @@
       "cannot_connect": "Nepavyko prisijungti",
       "unknown": "Netikėta klaida",
       "unsupported_device": "Nepalaikomas įrenginys",
-      "invalid_host": "Įveskite serverio vardą arba IP adresą"
+      "invalid_host": "Įveskite serverio vardą arba IP adresą",
+      "wrong_device": "Pasirinktas įrenginys neatitinka šio valdiklio.",
+      "cannot_identify": "Nepavyko patikrinti valdiklio ID. Patikrinkite UDP 4000 prievado ryšį ir bandykite dar kartą."
     },
     "step": {
-      "user": {
+      "reconfigure": {
         "data": {
           "host": "Adresas",
           "port": "Prievadas"
         }
       },
-      "reconfigure": {
+      "manual": {
         "data": {
           "host": "Adresas",
           "port": "Prievadas"
+        },
+        "description": "Patvirtinkite adresą ir Modbus prievadą."
+      },
+      "user": {
+        "menu_options": {
+          "discovered": "Pasirinkti rastą įrenginį",
+          "manual": "Įvesti ryšio duomenis rankiniu būdu"
+        }
+      },
+      "discovered": {
+        "title": "Pasirinkti įrenginį",
+        "data": {
+          "device": "Įrenginys"
         }
       }
     }
