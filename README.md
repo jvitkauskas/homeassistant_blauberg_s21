@@ -1,7 +1,7 @@
 # Blauberg S21 for Home Assistant
 
 Control a Blauberg S21 ventilation unit locally over Modbus TCP. Requires
-**Home Assistant 2026.9.4 or newer** (Python 3.14.2+) and uses `pybls21==5.1.0`.
+**Home Assistant 2026.9.4 or newer** (Python 3.14.2+) and uses `pybls21==5.2.0`.
 
 ## Installation
 
@@ -28,9 +28,20 @@ The climate entity supports power, HVAC mode, target temperature, and fan mode.
 Three-speed devices use low/medium/high labels; other devices expose numbered
 levels. `custom` selects manual fan mode. The displayed current temperature is
 the supply outlet temperature, not necessarily the room temperature. The climate
-entity does not report heating/cooling activity: pybls21 5.1.0 infers that value
-rather than exposing measured heater/cooler operation. The selected HVAC mode
-and temperature target remain available.
+entity reports heating/cooling activity from the controller's DI7/DI8 operation
+bits. When both are inactive, measured fan RPM distinguishes ventilation from
+idle (or off when the unit is disabled and the fans have stopped). Selected mode
+and temperature differences never imply that a heater/cooler is running. Missing
+bits or simultaneous heating and cooling leave the combined activity unknown.
+Activity can differ from the selected mode, for example while fans run after
+switching the unit off.
+
+Optional “Heating active” and “Cooling active” binary sensors expose the bits
+individually, including simultaneous activity. They share the existing poll and
+are disabled by default. These indications describe controller-reported
+operation, not independently measured electrical power. Poll failures make the
+climate entity and sensors unavailable; neither the UI nor diagnostics uses the
+library's legacy inferred activity as a measurement.
 
 ## Sensors and controls
 
@@ -55,7 +66,7 @@ network requests. The integration exposes:
 - A bypass/rotor mode selector when fitted, and a manual-position slider only
   for analogue bypass/rotor hardware.
 
-RPM, exhaust temperature, timer controls, boost status, and other optional
+RPM, exhaust temperature, timer controls, boost/heater/cooler status, and other optional
 engineering readings are disabled by default for new entities. Enable them in
 the entity registry if useful. Existing user choices are preserved. All entities
 belong to one physical S21 device; the climate entity remains its primary control. A successful

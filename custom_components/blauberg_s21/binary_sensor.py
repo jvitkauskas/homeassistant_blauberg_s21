@@ -25,6 +25,20 @@ class S21BinarySensorDescription(BinarySensorEntityDescription):
 
 SENSORS = (
     S21BinarySensorDescription(
+        key="heating_active",
+        translation_key="heating_active",
+        device_class=BinarySensorDeviceClass.RUNNING,
+        entity_registry_enabled_default=False,
+        value_fn=lambda d: d.is_heating,
+    ),
+    S21BinarySensorDescription(
+        key="cooling_active",
+        translation_key="cooling_active",
+        device_class=BinarySensorDeviceClass.RUNNING,
+        entity_registry_enabled_default=False,
+        value_fn=lambda d: d.is_cooling,
+    ),
+    S21BinarySensorDescription(
         key="boost_active",
         translation_key="boost_active",
         entity_registry_enabled_default=False,

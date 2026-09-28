@@ -68,7 +68,9 @@ async def test_problem_includes_warnings(hass, entry, client, snapshot, raw, exp
 async def test_inferred_hvac_action_is_not_advertised(
     hass, entry, client, snapshot, mode, action
 ):
-    client.poll.return_value = replace(snapshot, hvac_mode=mode, hvac_action=action)
+    client.poll.return_value = replace(
+        snapshot, hvac_mode=mode, hvac_action=action, is_heating=None, is_cooling=None
+    )
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
     state = hass.states.get("climate.blauberg_s21")

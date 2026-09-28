@@ -14,6 +14,7 @@ async def async_get_config_entry_diagnostics(
     coordinator = entry.runtime_data
     snapshot = coordinator.data
     data = asdict(snapshot)
+    data["legacy_inferred_hvac_action"] = data.pop("hvac_action")
     data.pop("timer_countdown")
     data["timer_countdown_seconds"] = (
         snapshot.timer_countdown.total_seconds()

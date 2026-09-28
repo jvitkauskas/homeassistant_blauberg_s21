@@ -192,6 +192,12 @@
       },
       "boost_active": {
         "name": "Aktyvus sustiprintas vėdinimas"
+      },
+      "heating_active": {
+        "name": "Aktyvus šildymas"
+      },
+      "cooling_active": {
+        "name": "Aktyvus vėsinimas"
       }
     }
   }
