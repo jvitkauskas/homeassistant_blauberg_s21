@@ -73,6 +73,12 @@
       },
       "filter_attention": {
         "default": "mdi:filter"
+      },
+      "heating_active": {
+        "default": "mdi:radiator"
+      },
+      "cooling_active": {
+        "default": "mdi:snowflake"
       }
     }
   }

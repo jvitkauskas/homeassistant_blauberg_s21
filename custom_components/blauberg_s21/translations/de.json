@@ -189,6 +189,12 @@
       },
       "boost_active": {
         "name": "Boost aktiv"
+      },
+      "heating_active": {
+        "name": "Heizung aktiv"
+      },
+      "cooling_active": {
+        "name": "Kühlung aktiv"
       }
     }
   }

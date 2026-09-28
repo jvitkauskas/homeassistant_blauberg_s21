@@ -9,6 +9,7 @@ from homeassistant.components.climate.const import (
     FAN_LOW,
     FAN_MEDIUM,
     ClimateEntityFeature,
+    HVACAction,
     HVACMode,
 )
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
@@ -67,6 +68,23 @@ class BlS21ClimateEntity(S21Entity, ClimateEntity):
     @property
     def hvac_mode(self) -> HVACMode:
         return HVACMode(self.coordinator.data.hvac_mode)
+
+    @property
+    def hvac_action(self) -> HVACAction | None:
+        """Use operation bits and measured fan RPM, not mode/temperature guesses."""
+        data = self.coordinator.data
+        if data.is_heating is None or data.is_cooling is None:
+            return None
+        if data.is_heating and data.is_cooling:
+            # HA has no combined action; expose each bit via the optional sensors.
+            return None
+        if data.is_heating:
+            return HVACAction.HEATING
+        if data.is_cooling:
+            return HVACAction.COOLING
+        if data.supply_fan_speed > 0 or data.extract_fan_speed > 0:
+            return HVACAction.FAN
+        return HVACAction.OFF if data.hvac_mode == S21HVACMode.OFF else HVACAction.IDLE
 
     @property
     def hvac_modes(self) -> list[HVACMode]:

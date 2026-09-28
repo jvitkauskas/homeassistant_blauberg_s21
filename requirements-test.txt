@@ -1,4 +1,4 @@
 pytest-homeassistant-custom-component==0.13.367
-pybls21==5.1.0
+pybls21==5.2.0
 ruff>=0.14
 mypy>=1.19
