@@ -6,28 +6,36 @@
           "host": "[%key:common::config_flow::data::host%]",
           "port": "[%key:common::config_flow::data::port%]"
         }
+      },
+      "reconfigure": {
+        "data": {
+          "host": "[%key:common::config_flow::data::host%]",
+          "port": "[%key:common::config_flow::data::port%]"
+        }
       }
     },
     "error": {
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
       "unknown": "[%key:common::config_flow::error::unknown%]",
-      "unsupported_device": "Unsupported device"
+      "unsupported_device": "Unsupported device",
+      "invalid_host": "Enter a host name or IP address"
     },
     "abort": {
-      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "reconfigure_successful": "Connection settings updated"
     }
   },
   "entity": {
     "climate": {
-        "s21climate": {
-            "state_attributes": {
-                "fan_mode": {
-                    "state": {
-                        "custom": "Custom"
-                    }
-                }
+      "s21climate": {
+        "state_attributes": {
+          "fan_mode": {
+            "state": {
+              "custom": "Custom"
             }
+          }
         }
+      }
     }
   }
 }
