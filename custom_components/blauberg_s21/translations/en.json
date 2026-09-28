@@ -1,33 +1,41 @@
 {
-    "config": {
-        "abort": {
-            "already_configured": "Device is already configured"
-        },
-        "error": {
-            "cannot_connect": "Failed to connect",
-            "unknown": "Unexpected error",
-            "unsupported_device": "Unsupported device"
-        },
-        "step": {
-            "user": {
-                "data": {
-                    "host": "Host",
-                    "port": "Port"
-                }
-            }
-        }
+  "config": {
+    "abort": {
+      "already_configured": "Device is already configured",
+      "reconfigure_successful": "Connection settings updated"
     },
-    "entity": {
-        "climate": {
-            "s21climate": {
-                "state_attributes": {
-                    "fan_mode": {
-                        "state": {
-                            "custom": "Custom"
-                        }
-                    }
-                }
-            }
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "unknown": "Unexpected error",
+      "unsupported_device": "Unsupported device",
+      "invalid_host": "Enter a host name or IP address"
+    },
+    "step": {
+      "user": {
+        "data": {
+          "host": "Host",
+          "port": "Port"
         }
+      },
+      "reconfigure": {
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      }
     }
+  },
+  "entity": {
+    "climate": {
+      "s21climate": {
+        "state_attributes": {
+          "fan_mode": {
+            "state": {
+              "custom": "Custom"
+            }
+          }
+        }
+      }
+    }
+  }
 }

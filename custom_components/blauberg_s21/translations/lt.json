@@ -1,36 +1,44 @@
 {
-    "config": {
-        "abort": {
-            "already_configured": "Įrenginys jau sukonfigūruotas"
-        },
-        "error": {
-            "cannot_connect": "Nepavyko prisijungti",
-            "unknown": "Netikėta klaida",
-            "unsupported_device": "Nepalaikomas įrenginys"
-        },
-        "step": {
-            "user": {
-                "data": {
-                    "host": "Adresas",
-                    "port": "Prievadas"
-                }
-            }
-        }
+  "config": {
+    "abort": {
+      "already_configured": "Įrenginys jau sukonfigūruotas",
+      "reconfigure_successful": "Ryšio nustatymai atnaujinti"
     },
-    "entity": {
-        "climate": {
-            "s21climate": {
-                "state_attributes": {
-                    "fan_mode": {
-                        "state": {
-                            "low": "Lėtas",
-                            "medium": "Vidutinis",
-                            "high": "Greitas",
-                            "custom": "Pasirinktinis"
-                        }
-                    }
-                }
-            }
+    "error": {
+      "cannot_connect": "Nepavyko prisijungti",
+      "unknown": "Netikėta klaida",
+      "unsupported_device": "Nepalaikomas įrenginys",
+      "invalid_host": "Įveskite serverio vardą arba IP adresą"
+    },
+    "step": {
+      "user": {
+        "data": {
+          "host": "Adresas",
+          "port": "Prievadas"
         }
+      },
+      "reconfigure": {
+        "data": {
+          "host": "Adresas",
+          "port": "Prievadas"
+        }
+      }
     }
+  },
+  "entity": {
+    "climate": {
+      "s21climate": {
+        "state_attributes": {
+          "fan_mode": {
+            "state": {
+              "low": "Lėtas",
+              "medium": "Vidutinis",
+              "high": "Greitas",
+              "custom": "Pasirinktinis"
+            }
+          }
+        }
+      }
+    }
+  }
 }
