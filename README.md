@@ -16,6 +16,46 @@ levels. `custom` selects manual fan mode. The displayed current temperature is
 the supply outlet temperature, not necessarily the room temperature. HVAC action
 is inferred from the configured mode and supply temperatures.
 
+## Sensors and controls
+
+All readings share the climate entity's poll; adding sensors does not multiply
+network requests. The integration exposes:
+
+- Supply, intake, extract, and exhaust temperatures; humidity, airflow, and duct
+  pressure where available.
+- Supply/extract fan **RPM**, and separate optional fan-performance percentages.
+- Remaining filter-service time in hours, including the device's day/hour/minute
+  components; timer duration and accumulated operating time.
+- Alarm severity with active numeric codes in the `alarm_codes` attribute, raw
+  filter-status code, and optional bypass/rotor position.
+- Buttons to reset the filter timer and alarms.
+- Timer and weekly-schedule switches; an optional boost switch.
+- A manual fan-percentage slider, which sets the configured percentage and then
+  selects manual fan mode (255).
+- A bypass/rotor mode selector when fitted, and a manual-position slider only
+  for analogue bypass/rotor hardware.
+
+Optional/diagnostic sensors and boost are disabled by default where appropriate;
+enable them in the entity registry if your device supports them. A successful
+Modbus response can still contain an unavailable value: `0xFFFF` percentages and
+faulty temperature sensors show as unknown, not as zero or an extreme reading.
+Valid zero readings stay zero.
+
+Timer/schedule switches toggle settings already configured on the unit; they do
+not edit schedules or timer durations. The filter-reset button restarts the
+existing interval; **changing that interval is not yet implemented**.
+
+For bypass/rotor controls, closed means bypass closed / rotor running; open means
+bypass open / discrete rotor stopped, or manual control for analogue hardware.
+Setting a manual position does not change the mode. Position 0 means closed
+bypass / maximum rotor speed; 100 means open bypass / stopped rotor. Reload the
+integration if the installed bypass/rotor type is changed on the controller.
+
+Every successful control fetches confirmed device state. Downloads from the
+integration's **Diagnostics** menu contain cached device readings and update
+status, without host, port, config-entry identifiers, or user configuration.
+Diagnostics make no extra device request.
+
 ## Updates, errors, and reconfiguration
 
 The integration polls once every 30 seconds and shares that snapshot between
@@ -60,3 +100,9 @@ The shared-coordinator approach builds on the direction proposed by
 [Jonas Vogel (@birdie1) in PR #15](https://github.com/jvitkauskas/homeassistant_blauberg_s21/pull/15).
 Protocol handling remains in the independently tested
 [pybls21 library](https://github.com/jvitkauskas/pybls21).
+
+The sensor, maintenance-button, and manual-fan-control designs adapt the work in
+[@birdie1's PR #15](https://github.com/jvitkauskas/homeassistant_blauberg_s21/pull/15),
+with attribution retained in this README and the commit co-author credit. The
+implementation uses pybls21 5 snapshots and confirmed updates rather than
+embedding a modified Modbus client in the integration.

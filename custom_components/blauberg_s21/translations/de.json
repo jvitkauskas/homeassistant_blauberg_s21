@@ -36,6 +36,107 @@
           }
         }
       }
+    },
+    "sensor": {
+      "supply_temperature": {
+        "name": "Zulufttemperatur"
+      },
+      "intake_temperature": {
+        "name": "Außenlufttemperatur"
+      },
+      "extract_temperature": {
+        "name": "Ablufttemperatur"
+      },
+      "exhaust_temperature": {
+        "name": "Fortlufttemperatur"
+      },
+      "humidity": {
+        "name": "Luftfeuchtigkeit"
+      },
+      "supply_pressure": {
+        "name": "Zuluftdruck"
+      },
+      "extract_pressure": {
+        "name": "Abluftdruck"
+      },
+      "supply_airflow": {
+        "name": "Zuluftvolumenstrom"
+      },
+      "extract_airflow": {
+        "name": "Abluftvolumenstrom"
+      },
+      "supply_fan_speed": {
+        "name": "Zuluftventilator-Drehzahl"
+      },
+      "extract_fan_speed": {
+        "name": "Abluftventilator-Drehzahl"
+      },
+      "supply_fan_speed_percent": {
+        "name": "Zuluftventilator-Leistung"
+      },
+      "extract_fan_speed_percent": {
+        "name": "Abluftventilator-Leistung"
+      },
+      "timer_countdown": {
+        "name": "Verbleibende Timerzeit"
+      },
+      "operating_time": {
+        "name": "Betriebszeit"
+      },
+      "filter_remaining": {
+        "name": "Verbleibende Filterlaufzeit"
+      },
+      "filter_state": {
+        "name": "Filterstatuscode"
+      },
+      "alarm_state": {
+        "name": "Alarm",
+        "state": {
+          "none": "Keiner",
+          "alarm": "Alarm",
+          "warning": "Warnung"
+        }
+      },
+      "bypass_position": {
+        "name": "Bypass-/Rotorposition"
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Filtertimer zurücksetzen"
+      },
+      "reset_alarm": {
+        "name": "Alarm zurücksetzen"
+      }
+    },
+    "switch": {
+      "boost": {
+        "name": "Boost"
+      },
+      "timer": {
+        "name": "Timer"
+      },
+      "schedule": {
+        "name": "Wochenprogramm"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "name": "Manuelle Lüfterleistung"
+      },
+      "manual_bypass_position": {
+        "name": "Manuelle Bypass-/Rotorposition"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "name": "Bypass-/Rotormodus",
+        "state": {
+          "closed": "Geschlossen / Rotor läuft",
+          "open": "Offen / manuell",
+          "auto": "Automatisch"
+        }
+      }
     }
   }
 }
