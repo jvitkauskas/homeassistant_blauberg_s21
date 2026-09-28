@@ -1,14 +1,28 @@
 # Blauberg S21 for Home Assistant
 
 Control a Blauberg S21 ventilation unit locally over Modbus TCP. Requires
-**Home Assistant 2026.9.4 or newer** (Python 3.14.2+) and uses `pybls21==5.0.0`.
+**Home Assistant 2026.9.4 or newer** (Python 3.14.2+) and uses `pybls21==5.1.0`.
 
 ## Installation
 
 Install with HACS, or copy `custom_components/blauberg_s21` into your Home
 Assistant `config/custom_components` directory and restart Home Assistant.
 In **Settings → Devices & services → Add integration**, select **Blauberg S21**
-and enter the device host and Modbus port (normally 502).
+and wait for a short network search. Choose a discovered device, then confirm
+its host and Modbus port (normally 502). You can also enter the connection
+manually; if nothing is found, the manual form opens automatically.
+
+Discovery searches the IPv4 interfaces enabled in Home Assistant's network
+settings, using UDP port 4000. It normally works only within the local subnet.
+Blocked broadcasts, network isolation, or firmware without discovery support
+can prevent results; manual setup remains available. Discovery runs when you
+start adding the integration, not continuously in the background. It does not
+write device settings or require a discovery password on the tested S21.
+
+The selected controller ID is rechecked and Modbus connectivity is validated
+before saving. Manual setup also attempts to read the ID, but accepts devices
+that support only Modbus. The integration stores a discovered controller ID to
+detect duplicates across host/IP changes; it does not replace entity IDs.
 
 The climate entity supports power, HVAC mode, target temperature, and fan mode.
 Three-speed devices use low/medium/high labels; other devices expose numbered
@@ -66,9 +80,13 @@ command is bounded by a 20-second deadline, including waiting for other work.
 Use **Reconfigure** on the integration to change its host or port. The connection
 is validated before saving. Entity and device identity uses the config entry, so
 changing the IP address preserves the registered entities and their settings.
-Hostnames are compared without case and surrounding spaces when checking for
-duplicates; aliases referring to the same device cannot be detected without a
-hardware identifier.
+Reconfiguration also reads the controller ID. If the entry already has an ID,
+the new endpoint must report the same one; allow UDP port 4000 for this check.
+Older entries without an ID learn it after a successful reconfiguration, while
+retaining their config entry and registered entities. Devices already configured
+at the same host/port are rejected even when no ID is available. Aliases cannot
+be reliably matched against older entries until those entries have learned an ID.
+IP address changes are not automatically applied; use Reconfigure to update them.
 
 ## Upgrading from 0.4.x
 

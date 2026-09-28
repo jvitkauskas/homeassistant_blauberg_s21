@@ -8,19 +8,34 @@
       "cannot_connect": "Verbindung fehlgeschlagen",
       "unknown": "Unerwarteter Fehler",
       "unsupported_device": "Nicht unterstütztes Gerät",
-      "invalid_host": "Geben Sie einen Hostnamen oder eine IP-Adresse ein"
+      "invalid_host": "Geben Sie einen Hostnamen oder eine IP-Adresse ein",
+      "wrong_device": "Das ausgewählte Gerät entspricht nicht diesem Controller.",
+      "cannot_identify": "Die Controller-ID konnte nicht geprüft werden. UDP-Port 4000 prüfen und erneut versuchen."
     },
     "step": {
-      "user": {
+      "reconfigure": {
         "data": {
           "host": "Host",
           "port": "Port"
         }
       },
-      "reconfigure": {
+      "manual": {
         "data": {
           "host": "Host",
           "port": "Port"
+        },
+        "description": "Host und Modbus-Port bestätigen."
+      },
+      "user": {
+        "menu_options": {
+          "discovered": "Ein gefundenes Gerät auswählen",
+          "manual": "Verbindung manuell eingeben"
+        }
+      },
+      "discovered": {
+        "title": "Gerät auswählen",
+        "data": {
+          "device": "Gerät"
         }
       }
     }
