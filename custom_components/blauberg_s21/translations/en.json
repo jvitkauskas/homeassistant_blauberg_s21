@@ -36,6 +36,107 @@
           }
         }
       }
+    },
+    "sensor": {
+      "supply_temperature": {
+        "name": "Supply temperature"
+      },
+      "intake_temperature": {
+        "name": "Intake temperature"
+      },
+      "extract_temperature": {
+        "name": "Extract temperature"
+      },
+      "exhaust_temperature": {
+        "name": "Exhaust temperature"
+      },
+      "humidity": {
+        "name": "Humidity"
+      },
+      "supply_pressure": {
+        "name": "Supply pressure"
+      },
+      "extract_pressure": {
+        "name": "Extract pressure"
+      },
+      "supply_airflow": {
+        "name": "Supply airflow"
+      },
+      "extract_airflow": {
+        "name": "Extract airflow"
+      },
+      "supply_fan_speed": {
+        "name": "Supply fan speed"
+      },
+      "extract_fan_speed": {
+        "name": "Extract fan speed"
+      },
+      "supply_fan_speed_percent": {
+        "name": "Supply fan performance"
+      },
+      "extract_fan_speed_percent": {
+        "name": "Extract fan performance"
+      },
+      "timer_countdown": {
+        "name": "Timer remaining"
+      },
+      "operating_time": {
+        "name": "Operating time"
+      },
+      "filter_remaining": {
+        "name": "Filter service remaining"
+      },
+      "filter_state": {
+        "name": "Filter status code"
+      },
+      "alarm_state": {
+        "name": "Alarm",
+        "state": {
+          "none": "None",
+          "alarm": "Alarm",
+          "warning": "Warning"
+        }
+      },
+      "bypass_position": {
+        "name": "Bypass/rotor position"
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Reset filter timer"
+      },
+      "reset_alarm": {
+        "name": "Reset alarm"
+      }
+    },
+    "switch": {
+      "boost": {
+        "name": "Boost"
+      },
+      "timer": {
+        "name": "Timer"
+      },
+      "schedule": {
+        "name": "Weekly schedule"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "name": "Manual fan speed"
+      },
+      "manual_bypass_position": {
+        "name": "Manual bypass/rotor position"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "name": "Bypass/rotor mode",
+        "state": {
+          "closed": "Closed / rotor running",
+          "open": "Open / manual",
+          "auto": "Automatic"
+        }
+      }
     }
   }
 }

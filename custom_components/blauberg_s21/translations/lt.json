@@ -39,6 +39,107 @@
           }
         }
       }
+    },
+    "sensor": {
+      "supply_temperature": {
+        "name": "Tiekiamo oro temperatūra"
+      },
+      "intake_temperature": {
+        "name": "Lauko oro temperatūra"
+      },
+      "extract_temperature": {
+        "name": "Iš patalpų šalinamo oro temperatūra"
+      },
+      "exhaust_temperature": {
+        "name": "Į lauką išmetamo oro temperatūra"
+      },
+      "humidity": {
+        "name": "Drėgmė"
+      },
+      "supply_pressure": {
+        "name": "Tiekiamo oro slėgis"
+      },
+      "extract_pressure": {
+        "name": "Šalinamo oro slėgis"
+      },
+      "supply_airflow": {
+        "name": "Tiekiamo oro srautas"
+      },
+      "extract_airflow": {
+        "name": "Šalinamo oro srautas"
+      },
+      "supply_fan_speed": {
+        "name": "Tiekimo ventiliatoriaus sūkiai"
+      },
+      "extract_fan_speed": {
+        "name": "Šalinimo ventiliatoriaus sūkiai"
+      },
+      "supply_fan_speed_percent": {
+        "name": "Tiekimo ventiliatoriaus našumas"
+      },
+      "extract_fan_speed_percent": {
+        "name": "Šalinimo ventiliatoriaus našumas"
+      },
+      "timer_countdown": {
+        "name": "Likęs laikmačio laikas"
+      },
+      "operating_time": {
+        "name": "Veikimo laikas"
+      },
+      "filter_remaining": {
+        "name": "Laikas iki filtro keitimo"
+      },
+      "filter_state": {
+        "name": "Filtro būsenos kodas"
+      },
+      "alarm_state": {
+        "name": "Aliarmas",
+        "state": {
+          "none": "Nėra",
+          "alarm": "Aliarmas",
+          "warning": "Įspėjimas"
+        }
+      },
+      "bypass_position": {
+        "name": "Apėjimo sklendės / rotoriaus padėtis"
+      }
+    },
+    "button": {
+      "reset_filter": {
+        "name": "Atstatyti filtro laikmatį"
+      },
+      "reset_alarm": {
+        "name": "Atstatyti aliarmą"
+      }
+    },
+    "switch": {
+      "boost": {
+        "name": "Intensyvus režimas"
+      },
+      "timer": {
+        "name": "Laikmatis"
+      },
+      "schedule": {
+        "name": "Savaitės programa"
+      }
+    },
+    "number": {
+      "manual_fan_speed_percent": {
+        "name": "Rankinis ventiliatoriaus našumas"
+      },
+      "manual_bypass_position": {
+        "name": "Rankinė apėjimo sklendės / rotoriaus padėtis"
+      }
+    },
+    "select": {
+      "bypass_mode": {
+        "name": "Apėjimo sklendės / rotoriaus režimas",
+        "state": {
+          "closed": "Uždaryta / rotorius veikia",
+          "open": "Atidaryta / rankinis",
+          "auto": "Automatinis"
+        }
+      }
     }
   }
 }

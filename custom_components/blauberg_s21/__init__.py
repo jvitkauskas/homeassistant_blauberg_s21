@@ -9,7 +9,14 @@ from pybls21 import S21Client
 from .const import DOMAIN
 from .coordinator import S21ConfigEntry, S21Coordinator
 
-PLATFORMS = [Platform.CLIMATE]
+PLATFORMS = [
+    Platform.CLIMATE,
+    Platform.SENSOR,
+    Platform.BUTTON,
+    Platform.NUMBER,
+    Platform.SWITCH,
+    Platform.SELECT,
+]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: S21ConfigEntry) -> bool:
