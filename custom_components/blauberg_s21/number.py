@@ -38,15 +38,21 @@ class S21Percentage(S21Entity, NumberEntity):
         super().__init__(entry, key)
         self._key = key
         self._attr_translation_key = key
+        self._rotor = key == "manual_bypass_position" and (
+            entry.runtime_data.data.bypass_type == BypassType.ROTOR_ANALOGUE
+        )
+        if self._rotor:
+            self._attr_translation_key = "manual_rotor_speed"
 
     @property
     def native_value(self) -> float | None:
         data = self.coordinator.data
-        return (
+        value = (
             data.manual_fan_speed_percent
             if self._key == "manual_fan_speed_percent"
             else data.manual_bypass_position
         )
+        return 100 - value if self._rotor and value is not None else value
 
     async def async_set_native_value(self, value: float) -> None:
         if (
@@ -66,6 +72,8 @@ class S21Percentage(S21Entity, NumberEntity):
                 await client.set_fan_mode(255)
             else:
                 # Setting a position does not implicitly change bypass/rotor mode.
-                await client.set_bypass_position(percentage)
+                await client.set_bypass_position(
+                    100 - percentage if self._rotor else percentage
+                )
 
         await self.coordinator.async_execute(command)

@@ -20,7 +20,7 @@ from homeassistant.const import (
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from pybls21 import ClimateDevice
+from pybls21 import BypassType, ClimateDevice
 
 from .coordinator import S21ConfigEntry
 from .entity import S21Entity
@@ -77,6 +77,7 @@ SENSORS = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
         value_fn=lambda d: d.current_exhaust_temperature,
     ),
     S21SensorDescription(
@@ -129,6 +130,7 @@ SENSORS = (
         translation_key="supply_fan_speed",
         native_unit_of_measurement="rpm",
         state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
         value_fn=lambda d: d.supply_fan_speed,
     ),
     S21SensorDescription(
@@ -136,6 +138,7 @@ SENSORS = (
         translation_key="extract_fan_speed",
         native_unit_of_measurement="rpm",
         state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
         value_fn=lambda d: d.extract_fan_speed,
     ),
     S21SensorDescription(
@@ -210,7 +213,12 @@ SENSORS = (
 async def async_setup_entry(
     hass: HomeAssistant, entry: S21ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    async_add_entities(S21Sensor(entry, description) for description in SENSORS)
+    async_add_entities(
+        S21Sensor(entry, description)
+        for description in SENSORS
+        if description.key != "bypass_position"
+        or entry.runtime_data.data.bypass_type != BypassType.NOT_AVAILABLE
+    )
 
 
 class S21Sensor(S21Entity, SensorEntity):
@@ -223,6 +231,13 @@ class S21Sensor(S21Entity, SensorEntity):
     ) -> None:
         super().__init__(entry, description.key)
         self.entity_description = description
+        if (
+            description.key == "bypass_position"
+            and entry.runtime_data.data.bypass_type
+            in (BypassType.ROTOR_DISCRETE, BypassType.ROTOR_ANALOGUE)
+        ):
+            # Optional IR51 semantics have not been verified as measured rotor speed.
+            self._attr_translation_key = "rotor_position"
 
     @property
     def native_value(self) -> float | int | str | None:

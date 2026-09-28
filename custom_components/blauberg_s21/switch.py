@@ -24,16 +24,9 @@ class S21SwitchDescription(SwitchEntityDescription):
 
 SWITCHES = (
     S21SwitchDescription(
-        key="boost",
-        translation_key="boost",
-        entity_registry_enabled_default=False,
-        value_fn=lambda d: d.is_boosting,
-        on_fn=lambda c: c.boost_on(),
-        off_fn=lambda c: c.boost_off(),
-    ),
-    S21SwitchDescription(
         key="timer",
         translation_key="timer",
+        entity_registry_enabled_default=False,
         value_fn=lambda d: d.is_timer,
         on_fn=lambda c: c.set_timer_on(),
         off_fn=lambda c: c.set_timer_off(),

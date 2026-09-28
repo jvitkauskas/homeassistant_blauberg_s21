@@ -68,6 +68,9 @@ async def test_all_sensors_share_one_poll_and_preserve_units(
         registered = er.async_get(hass).async_get(
             entity_id(hass, entry, "sensor", description.key)
         )
+        if description.key == "bypass_position":
+            assert registered is None
+            continue
         assert bool(registered.disabled) == (
             not description.entity_registry_enabled_default
         )
@@ -110,7 +113,6 @@ async def test_maintenance_buttons(hass, entry, client, key, method):
 @pytest.mark.parametrize(
     ("key", "on_method", "off_method", "field"),
     [
-        ("boost", "boost_on", "boost_off", "is_boosting"),
         ("timer", "set_timer_on", "set_timer_off", "is_timer"),
         (
             "schedule",
@@ -221,8 +223,12 @@ async def test_bypass_controls_follow_installed_hardware(
         await hass.services.async_call(
             "number", "set_value", {"entity_id": number_id, "value": 30}, blocking=True
         )
-        client.set_bypass_position.assert_awaited_once_with(30)
-        assert hass.states.get(number_id).state == "30"
+        client.set_bypass_position.assert_awaited_once_with(
+            70 if bypass_type == BypassType.ROTOR_ANALOGUE else 30
+        )
+        assert hass.states.get(number_id).state == (
+            "70" if bypass_type == BypassType.ROTOR_ANALOGUE else "30"
+        )
         # Setting the manual percentage does not change mode implicitly.
         assert client.set_bypass_mode.await_count == 1
 

@@ -9,7 +9,6 @@ from homeassistant.components.climate.const import (
     FAN_LOW,
     FAN_MEDIUM,
     ClimateEntityFeature,
-    HVACAction,
     HVACMode,
 )
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
@@ -68,11 +67,6 @@ class BlS21ClimateEntity(S21Entity, ClimateEntity):
     @property
     def hvac_mode(self) -> HVACMode:
         return HVACMode(self.coordinator.data.hvac_mode)
-
-    @property
-    def hvac_action(self) -> HVACAction | None:
-        action = self.coordinator.data.hvac_action
-        return HVACAction(action) if action is not None else None
 
     @property
     def hvac_modes(self) -> list[HVACMode]:

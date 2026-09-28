@@ -11,6 +11,7 @@ from .coordinator import S21ConfigEntry, S21Coordinator
 
 PLATFORMS = [
     Platform.CLIMATE,
+    Platform.BINARY_SENSOR,
     Platform.SENSOR,
     Platform.BUTTON,
     Platform.NUMBER,

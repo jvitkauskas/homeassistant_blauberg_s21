@@ -26,6 +26,11 @@ class S21BypassMode(S21Entity, SelectEntity):
 
     def __init__(self, entry: S21ConfigEntry) -> None:
         super().__init__(entry, "bypass_mode")
+        self._attr_translation_key = {
+            BypassType.ROTOR_DISCRETE: "rotor_mode",
+            BypassType.ROTOR_ANALOGUE: "rotor_analogue_mode",
+            BypassType.BYPASS_ANALOGUE: "bypass_analogue_mode",
+        }.get(entry.runtime_data.data.bypass_type, "bypass_mode")
 
     @property
     def current_option(self) -> str | None:
