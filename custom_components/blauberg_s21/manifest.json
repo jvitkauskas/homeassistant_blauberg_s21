@@ -15,5 +15,5 @@
   "requirements": [
     "pybls21==5.2.0"
   ],
-  "version": "0.6.1"
+  "version": "0.6.2"
 }

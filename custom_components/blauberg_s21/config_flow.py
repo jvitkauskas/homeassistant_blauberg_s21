@@ -125,7 +125,17 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     _LOGGER.exception("Unexpected error validating S21 endpoint")
                     errors["base"] = "unknown"
                 else:
-                    identity = await async_identify_device(data[CONF_HOST])
+                    # Discovery already supplied the ID for this address. Only
+                    # query it again if the user changed the host, or when
+                    # configuring manually or reconfiguring an existing entry.
+                    if (
+                        entry is None
+                        and self._selected is not None
+                        and data[CONF_HOST] == self._selected.host
+                    ):
+                        identity: str | None = self._selected.device_id
+                    else:
+                        identity = await async_identify_device(data[CONF_HOST])
                     expected = (
                         entry.unique_id
                         if entry

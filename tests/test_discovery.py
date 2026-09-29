@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from homeassistant.config_entries import SOURCE_RECONFIGURE, SOURCE_USER
 from homeassistant.data_entry_flow import FlowResultType
-from pybls21 import DiscoveredDevice, DiscoveryError
+from pybls21 import DiscoveredDevice, DiscoveryError, ModbusCommunicationException
 
 from custom_components.blauberg_s21.const import DOMAIN
 from custom_components.blauberg_s21.discovery import (
@@ -36,35 +36,78 @@ async def discovered_flow(hass, discovery):
     return result
 
 
-async def test_discovered_setup_confirms_modbus_and_identity(hass, discovery, client):
+@pytest.mark.parametrize("port", [502, 1502])
+async def test_discovered_setup_reuses_identity_without_udp(
+    hass, discovery, client, port
+):
     result = await discovered_flow(hass, discovery)
-    discovery[1].return_value = DEVICE.device_id
+    # Model the real failure: broadcast discovery works, but unicast is silent.
+    discovery[1].return_value = None
     with patch("custom_components.blauberg_s21.async_setup_entry", return_value=True):
         result = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {"host": DEVICE.host, "port": 1502}
+            result["flow_id"], {"host": f" {DEVICE.host} ", "port": port}
         )
         await hass.async_block_till_done()
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["result"].unique_id == DEVICE.device_id
-    assert result["data"] == {"host": DEVICE.host, "port": 1502}
+    assert result["data"] == {"host": DEVICE.host, "port": port}
     client.poll.assert_awaited_once()
-    discovery[1].assert_awaited_once_with(DEVICE.host)
+    discovery[1].assert_not_awaited()
+
+
+async def test_discovered_setup_still_requires_modbus(hass, discovery, client):
+    result = await discovered_flow(hass, discovery)
+    client.poll.side_effect = ModbusCommunicationException("offline")
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"host": DEVICE.host, "port": 502}
+    )
+    assert result["type"] == FlowResultType.FORM
+    assert result["errors"] == {"base": "cannot_connect"}
+    discovery[1].assert_not_awaited()
+
+
+async def test_discovered_identity_detects_existing_device(
+    hass, discovery, client, entry
+):
+    hass.config_entries.async_update_entry(entry, unique_id=DEVICE.device_id)
+    result = await discovered_flow(hass, discovery)
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"host": DEVICE.host, "port": 502}
+    )
+    assert result["type"] == FlowResultType.ABORT
+    assert result["reason"] == "already_configured"
+    discovery[1].assert_not_awaited()
+
+
+async def test_changed_discovered_host_checks_identity(hass, discovery, client):
+    result = await discovered_flow(hass, discovery)
+    discovery[1].return_value = DEVICE.device_id
+    with patch("custom_components.blauberg_s21.async_setup_entry", return_value=True):
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {"host": "new.local", "port": 502}
+        )
+        await hass.async_block_till_done()
+    assert result["type"] == FlowResultType.CREATE_ENTRY
+    assert result["result"].unique_id == DEVICE.device_id
+    assert result["data"]["host"] == "new.local"
+    discovery[1].assert_awaited_once_with("new.local")
 
 
 @pytest.mark.parametrize(
     "identity,reason",
     [(None, "cannot_identify"), ("another-controller", "wrong_device")],
 )
-async def test_stale_discovery_does_not_configure_another_device(
+async def test_changed_discovered_host_rejects_unverified_identity(
     hass, discovery, client, identity, reason
 ):
     result = await discovered_flow(hass, discovery)
     discovery[1].return_value = identity
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {"host": DEVICE.host, "port": 502}
+        result["flow_id"], {"host": "new.local", "port": 502}
     )
     assert result["errors"] == {"base": reason}
     assert result["type"] == FlowResultType.FORM
+    discovery[1].assert_awaited_once_with("new.local")
 
 
 async def test_manual_choice_remains_available(hass, discovery, client):
@@ -117,17 +160,24 @@ async def test_reconfigure_learns_identity_without_replacing_entry(
     reload.assert_awaited_once_with(original_id)
 
 
-async def test_reconfigure_rejects_different_controller(hass, discovery, client, entry):
+@pytest.mark.parametrize(
+    "identity,reason",
+    [(None, "cannot_identify"), ("different", "wrong_device")],
+)
+async def test_reconfigure_rejects_unverified_controller(
+    hass, discovery, client, entry, identity, reason
+):
     hass.config_entries.async_update_entry(entry, unique_id=DEVICE.device_id)
-    discovery[1].return_value = "different"
+    discovery[1].return_value = identity
     result = await hass.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_RECONFIGURE, "entry_id": entry.entry_id},
         data={"host": "new.local", "port": 502},
     )
-    assert result["errors"] == {"base": "wrong_device"}
+    assert result["errors"] == {"base": reason}
     assert entry.data["host"] == "s21.local"
     assert entry.unique_id == DEVICE.device_id
+    discovery[1].assert_awaited_once_with("new.local")
 
 
 def adapter(enabled, *addresses):
