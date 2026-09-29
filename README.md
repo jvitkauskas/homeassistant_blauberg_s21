@@ -19,8 +19,11 @@ can prevent results; manual setup remains available. Discovery runs when you
 start adding the integration, not continuously in the background. It does not
 write device settings or require a discovery password on the tested S21.
 
-The selected controller ID is rechecked and Modbus connectivity is validated
-before saving. Manual setup also attempts to read the ID, but accepts devices
+When confirming a discovered device at its discovered IP address, setup reuses
+the controller ID from that discovery response and validates Modbus connectivity
+before saving. It does not require a second UDP response. If you change the host
+in the confirmation form, setup verifies that the new endpoint has the selected
+controller ID. Manual setup also attempts to read the ID, but accepts devices
 that support only Modbus. The integration stores a discovered controller ID to
 detect duplicates across host/IP changes; it does not replace entity IDs.
 
@@ -179,7 +182,7 @@ merging a PR does not create a tag or publish a release.
 
 After merging the release's changes into main, open **Actions → Release → Run
 workflow**, choose **main**, and enter the manifest version prefixed with `v`
-(currently `v0.6.1`). The workflow checks the tag/version match and runs the
+(currently `v0.6.2`). The workflow checks the tag/version match and runs the
 complete test matrix, HACS validation, and hassfest before creating the GitHub
 tag and release with generated release notes. It releases the exact commit
 selected when the workflow starts, even if main advances while checks run.
